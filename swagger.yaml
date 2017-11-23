@@ -2444,6 +2444,7 @@ definitions:
   Info:
     required:
     - version
+    - dashversion
     - protocolversion
     - walletversion
     - balance
@@ -2463,6 +2464,9 @@ definitions:
       version:
         description: the server version
         type: number
+      dashversion:
+        description: the dashpay server version
+        type: number        
       protocolversion:
         description: the protocol version
         type: number
