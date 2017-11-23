@@ -1818,33 +1818,6 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /importprunedfunds:
-    x-swagger-router-controller: rpc
-    get:
-      operationId: importprunedfunds
-      description: Imports funds without rescan. Corresponding address or script must previously be included in wallet. Aimed towards pruned wallets. The end-user is responsible to import additional transactions that subsequently spend the imported outputs or rescan after the point in the blockchain the transaction is included.
-      security:
-      - token: []
-      tags:
-      - General
-      parameters:
-      - name: rawtransaction
-        in: query
-        required: true
-        type: string
-      - name: txoutproof
-        in: query
-        required: true
-        type: string
-      responses:
-        "200":
-          description: Success
-          schema:
-            type: string
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
 
   /importpubkey:
     x-swagger-router-controller: rpc
@@ -2115,31 +2088,6 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /move:
-    x-swagger-router-controller: rpc
-    post:
-      operationId: move
-      description: DEPRECATED. Move a specified amount from one account in your wallet to another.
-      security:
-      - token: []
-      tags:
-      - General
-      parameters:
-      - name: request
-        in: body
-        required: true
-        schema:
-          $ref: "#/definitions/MoveRequest"
-      responses:
-        "200":
-          description: Success
-          schema:
-            type: boolean
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-
   /offerinfo:
     x-swagger-router-controller: rpc
     get:
@@ -2344,30 +2292,6 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /removeprunedfunds:
-    x-swagger-router-controller: rpc
-    get:
-      operationId: removeprunedfunds
-      description: Deletes the specified transaction from the wallet. Meant for use with pruned wallets and as a companion to importprunedfunds. This will effect wallet balances.
-      security:
-      - token: []
-      tags:
-      - General
-      parameters:
-      - name: txid
-        in: query
-        required: true
-        type: string
-      responses:
-        "200":
-          description: Success
-          schema:
-            type: string
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-
   /sendmany:
     x-swagger-router-controller: rpc
     post:
@@ -2520,6 +2444,7 @@ definitions:
   Info:
     required:
     - version
+    - dashversion
     - protocolversion
     - walletversion
     - balance
@@ -2539,6 +2464,9 @@ definitions:
       version:
         description: the server version
         type: number
+      dashversion:
+        description: the dashpay server version
+        type: number        
       protocolversion:
         description: the protocol version
         type: number
