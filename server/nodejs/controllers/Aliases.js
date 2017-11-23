@@ -1,51 +1,167 @@
 'use strict';
 
-var url = require('url');
+var utils = require('../utils/writer.js');
+var Aliases = require('../service/AliasesService');
 
-
-var Aliases = require('./AliasesService');
-
-
-module.exports.aliasaffiliates = function aliasaffiliates (req, res, next) {
-  Aliases.aliasaffiliates(req.swagger.params, res, next);
-};
-
-module.exports.aliasauthenticate = function aliasauthenticate (req, res, next) {
-  Aliases.aliasauthenticate(req.swagger.params, res, next);
+module.exports.aliasaddscript = function aliasaddscript (req, res, next) {
+  var redeemscript = req.swagger.params['redeemscript'].value;
+  Aliases.aliasaddscript(redeemscript)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
 };
 
 module.exports.aliasbalance = function aliasbalance (req, res, next) {
-  Aliases.aliasbalance(req.swagger.params, res, next);
+  var alias = req.swagger.params['alias'].value;
+  Aliases.aliasbalance(alias)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
 };
 
-module.exports.aliascount = function aliascount (req, res, next) {
-  Aliases.aliascount(req.swagger.params, res, next);
+module.exports.aliasclearwhitelist = function aliasclearwhitelist (req, res, next) {
+  var owneralias = req.swagger.params['owneralias'].value;
+  var witness = req.swagger.params['witness'].value;
+  Aliases.aliasclearwhitelist(owneralias,witness)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
 };
 
 module.exports.aliasfilter = function aliasfilter (req, res, next) {
-  Aliases.aliasfilter(req.swagger.params, res, next);
+  var query = req.swagger.params['query'].value;
+  var count = req.swagger.params['count'].value;
+  var from = req.swagger.params['from'].value;
+  Aliases.aliasfilter(query,count,from)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
 };
 
 module.exports.aliashistory = function aliashistory (req, res, next) {
-  Aliases.aliashistory(req.swagger.params, res, next);
+  var query = req.swagger.params['query'].value;
+  var count = req.swagger.params['count'].value;
+  var from = req.swagger.params['from'].value;
+  Aliases.aliashistory(query,count,from)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
 };
 
 module.exports.aliasinfo = function aliasinfo (req, res, next) {
-  Aliases.aliasinfo(req.swagger.params, res, next);
-};
-
-module.exports.aliaslist = function aliaslist (req, res, next) {
-  Aliases.aliaslist(req.swagger.params, res, next);
+  var aliasname = req.swagger.params['aliasname'].value;
+  Aliases.aliasinfo(aliasname)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
 };
 
 module.exports.aliasnew = function aliasnew (req, res, next) {
-  Aliases.aliasnew(req.swagger.params, res, next);
+  var request = req.swagger.params['request'].value;
+  Aliases.aliasnew(request)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
 };
 
 module.exports.aliaspay = function aliaspay (req, res, next) {
-  Aliases.aliaspay(req.swagger.params, res, next);
+  var request = req.swagger.params['request'].value;
+  Aliases.aliaspay(request)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
+module.exports.aliastxhistory = function aliastxhistory (req, res, next) {
+  var query = req.swagger.params['query'].value;
+  var count = req.swagger.params['count'].value;
+  var from = req.swagger.params['from'].value;
+  Aliases.aliastxhistory(query,count,from)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
 };
 
 module.exports.aliasupdate = function aliasupdate (req, res, next) {
-  Aliases.aliasupdate(req.swagger.params, res, next);
+  var request = req.swagger.params['request'].value;
+  Aliases.aliasupdate(request)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
+module.exports.aliasupdatewhitelist = function aliasupdatewhitelist (req, res, next) {
+  var request = req.swagger.params['request'].value;
+  Aliases.aliasupdatewhitelist(request)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
+module.exports.aliaswhitelist = function aliaswhitelist (req, res, next) {
+  var alias = req.swagger.params['alias'].value;
+  var witness = req.swagger.params['witness'].value;
+  Aliases.aliaswhitelist(alias,witness)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
+module.exports.prunesyscoinservices = function prunesyscoinservices (req, res, next) {
+  Aliases.prunesyscoinservices()
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
+module.exports.syscoinquery = function syscoinquery (req, res, next) {
+  var collection = req.swagger.params['collection'].value;
+  var query = req.swagger.params['query'].value;
+  var options = req.swagger.params['options'].value;
+  Aliases.syscoinquery(collection,query,options)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
 };
