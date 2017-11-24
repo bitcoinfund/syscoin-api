@@ -2466,7 +2466,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-            
+
   /getpoolinfo:
     x-swagger-router-controller: rpc
     post:
@@ -2475,7 +2475,7 @@ paths:
       security:
       - token: []
       tags:
-      - General
+      - Masternodes
       responses:
         "200":
           description: Success
