@@ -1,15 +1,26 @@
 'use strict';
 
-var url = require('url');
-
-
-var Blockmarket = require('./BlockmarketService');
-
+var utils = require('../utils/writer.js');
+var Blockmarket = require('../service/BlockmarketService');
 
 module.exports.login = function login (req, res, next) {
-  Blockmarket.login(req.swagger.params, res, next);
+  var auth = req.swagger.params['auth'].value;
+  Blockmarket.login(auth)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
 };
 
 module.exports.storedata = function storedata (req, res, next) {
-  Blockmarket.storedata(req.swagger.params, res, next);
+  var request = req.swagger.params['request'].value;
+  Blockmarket.storedata(request)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
 };

@@ -1,38 +1,74 @@
 'use strict';
 
-var url = require('url');
-
-
-var Certificates = require('./CertificatesService');
-
-module.exports.certcount = function certcount (req, res, next) {
-  Certificates.certcount(req.swagger.params, res, next);
-};
+var utils = require('../utils/writer.js');
+var Certificates = require('../service/CertificatesService');
 
 module.exports.certfilter = function certfilter (req, res, next) {
-  Certificates.certfilter(req.swagger.params, res, next);
+  var query = req.swagger.params['query'].value;
+  var count = req.swagger.params['count'].value;
+  var from = req.swagger.params['from'].value;
+  Certificates.certfilter(query,count,from)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
 };
 
 module.exports.certhistory = function certhistory (req, res, next) {
-  Certificates.certhistory(req.swagger.params, res, next);
+  var query = req.swagger.params['query'].value;
+  var count = req.swagger.params['count'].value;
+  var from = req.swagger.params['from'].value;
+  Certificates.certhistory(query,count,from)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
 };
 
 module.exports.certinfo = function certinfo (req, res, next) {
-  Certificates.certinfo(req.swagger.params, res, next);
-};
-
-module.exports.certlist = function certlist (req, res, next) {
-  Certificates.certlist(req.swagger.params, res, next);
+  var guid = req.swagger.params['guid'].value;
+  Certificates.certinfo(guid)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
 };
 
 module.exports.certnew = function certnew (req, res, next) {
-  Certificates.certnew(req.swagger.params, res, next);
+  var request = req.swagger.params['request'].value;
+  Certificates.certnew(request)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
 };
 
 module.exports.certtransfer = function certtransfer (req, res, next) {
-  Certificates.certtransfer(req.swagger.params, res, next);
+  var request = req.swagger.params['request'].value;
+  Certificates.certtransfer(request)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
 };
 
 module.exports.certupdate = function certupdate (req, res, next) {
-  Certificates.certupdate(req.swagger.params, res, next);
+  var request = req.swagger.params['request'].value;
+  Certificates.certupdate(request)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
 };
