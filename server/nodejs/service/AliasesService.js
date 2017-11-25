@@ -1,5 +1,6 @@
-'use strict';
-
+var syscoinClient = require('../index').syscoinClient;
+var varUtils = require('./util/varUtils');
+var commonUtils = require('./util/commonUtils');
 
 /**
  * Add redeemscript to local wallet for signing smart contract based alias transactions.
@@ -151,6 +152,35 @@ exports.aliasinfo = function(aliasname) {
  * returns List
  **/
 exports.aliasnew = function(request) {
+  //TODO: remove default args if they are no longer needed
+  var argList = [
+    { prop: "aliaspeg" },
+    { prop: "aliasname" },
+    { prop: "password"},
+    { prop: "publicvalue" },
+    { prop: "safesearch", defaultValue: "Yes" },
+    { prop: "accepttransfers", defaultValue: "Yes" },
+    { prop: "expire", defaultValue: 0 },
+    { prop: "nrequired", defaultValue: 0 },
+    { prop: "aliases", defaultValue: "[]" }
+  ];
+
+  request.nrequired = varUtils.correctTypes(request.nrequired, varUtils.TYPE_CONVERSION.NUM_TO_STRING); //TODO: update correctTypes function for new request structure, if this util is still needed
+
+  var cb = function(err, result, resHeaders) {
+    res.setHeader('Content-Type', 'application/json');
+
+    if (err) {
+      return commonUtils.reportError(res, err);
+    }
+
+    console.log('Alias new:', result);
+    res.end(JSON.stringify(result));
+  };
+
+  var arr = varUtils.getArgsArr(argList, args, "POST", cb);
+  syscoinClient.aliasNew.apply(syscoinClient, arr);
+
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = [ "aeiou" ];
