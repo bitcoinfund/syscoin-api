@@ -1,6 +1,4 @@
 var syscoinClient = require('../index').syscoinClient;
-var varUtils = require('./util/varUtils');
-var commonUtils = require('./util/commonUtils');
 
 /**
  * Add redeemscript to local wallet for signing smart contract based alias transactions.
@@ -151,45 +149,58 @@ exports.aliasinfo = function(aliasname) {
  * request AliasNewRequest 
  * returns List
  **/
-exports.aliasnew = function(request) {
-  //TODO: remove default args if they are no longer needed
-  var argList = [
-    { prop: "aliaspeg" },
-    { prop: "aliasname" },
-    { prop: "password"},
-    { prop: "publicvalue" },
-    { prop: "safesearch", defaultValue: "Yes" },
-    { prop: "accepttransfers", defaultValue: "Yes" },
-    { prop: "expire", defaultValue: 0 },
-    { prop: "nrequired", defaultValue: 0 },
-    { prop: "aliases", defaultValue: "[]" }
-  ];
+exports.aliasnew = async function(request) {
+  //Note1: we should no longer require 'default args' as was the pattern in 2.1.x as there should now
+  //      be a way to inform the rpc to us the default value by passing ""
 
-  request.nrequired = varUtils.correctTypes(request.nrequired, varUtils.TYPE_CONVERSION.NUM_TO_STRING); //TODO: update correctTypes function for new request structure, if this util is still needed
+  const aliasname = request.value.aliasname;
+  /*publicvalue:
+    description: Alias public profile data, 512 characters max.
+    type: string
+  accepttransfers:
+    description: set to No if this alias should not allow a certificate to be transferred to it. Defaults to Yes.
+    type: string
+  expire_timestamp:
+    description: Time in seconds. Future time when to expire alias. It is exponentially more expensive per year, calculation is FEERATE*(2.88^years). FEERATE is the dynamic satoshi per byte fee set in the rate peg alias used for this alias. Defaults to 1 year.
+    type: string
+  address:
+    description: Address for this alias.
+    type: string
+  encryption_privatekey:
+    description: Encrypted private key used for encryption/decryption of private data related to this alias. Should be encrypted to publickey.
+    type: string
+  encryption_publickey:
+    description: Public key used for encryption/decryption of private data related to this alias.
+    type: string
+  witness:
+    description: Witness alias name that will sign for web-of-trust notarization of this transaction.
+    type: string*/
 
-  var cb = function(err, result, resHeaders) {
-    res.setHeader('Content-Type', 'application/json');
+  //Note2: type correction util should no longer be needed, RPC should expect the correct types
+  //      ie: nrequired should be a number because it is a numeric value. In 2.1.x the RPC expected this
+  //          as a string. 2.2 should fix this, and expect a number for numeric values, boolean for true/false values,
+  //          string for mix-content values, etc.
 
-    if (err) {
-      return commonUtils.reportError(res, err);
-    }
-
-    console.log('Alias new:', result);
-    res.end(JSON.stringify(result));
+  var responseHandler = function(err, result, resHeaders) {
+    //res.setHeader('Content-Type', 'application/json');
+    //
+    //if (err) {
+    //  return commonUtils.reportError(res, err);
+    //}
+    //
+    //console.log('Alias new:', result);
+    //res.end(JSON.stringify(result));
   };
 
-  var arr = varUtils.getArgsArr(argList, args, "POST", cb);
-  syscoinClient.aliasNew.apply(syscoinClient, arr);
+  const response = {};
+  response['application/json'] = [];
 
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ "aeiou" ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+  try {
+    const result = await syscoinClient.aliasNew(aliasname);
+    console.log("Res:" + JSON.stringify(result));
+    response['application/json'].push(result);
+    return response;
+  }catch(e){}
 }
 
 

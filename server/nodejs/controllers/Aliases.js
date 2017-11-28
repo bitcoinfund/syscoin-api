@@ -74,15 +74,14 @@ module.exports.aliasinfo = function aliasinfo (req, res, next) {
     });
 };
 
-module.exports.aliasnew = function aliasnew (req, res, next) {
+module.exports.aliasnew = async (req, res, next) => {
   var request = req.swagger.params['request'].value;
-  Aliases.aliasnew(request)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
+  try {
+    const response = await Aliases.aliasnew(request);
+    utils.writeJson(res, response);
+  }catch(response) {
+    utils.writeJson(res, response);
+  }
 };
 
 module.exports.aliaspay = function aliaspay (req, res, next) {
