@@ -149,58 +149,33 @@ exports.aliasinfo = function(aliasname) {
  * request AliasNewRequest 
  * returns List
  **/
-exports.aliasnew = async function(request) {
+exports.aliasnew = async (request) => {
   //Note1: we should no longer require 'default args' as was the pattern in 2.1.x as there should now
   //      be a way to inform the rpc to us the default value by passing ""
-
-  const aliasname = request.value.aliasname;
-  /*publicvalue:
-    description: Alias public profile data, 512 characters max.
-    type: string
-  accepttransfers:
-    description: set to No if this alias should not allow a certificate to be transferred to it. Defaults to Yes.
-    type: string
-  expire_timestamp:
-    description: Time in seconds. Future time when to expire alias. It is exponentially more expensive per year, calculation is FEERATE*(2.88^years). FEERATE is the dynamic satoshi per byte fee set in the rate peg alias used for this alias. Defaults to 1 year.
-    type: string
-  address:
-    description: Address for this alias.
-    type: string
-  encryption_privatekey:
-    description: Encrypted private key used for encryption/decryption of private data related to this alias. Should be encrypted to publickey.
-    type: string
-  encryption_publickey:
-    description: Public key used for encryption/decryption of private data related to this alias.
-    type: string
-  witness:
-    description: Witness alias name that will sign for web-of-trust notarization of this transaction.
-    type: string*/
 
   //Note2: type correction util should no longer be needed, RPC should expect the correct types
   //      ie: nrequired should be a number because it is a numeric value. In 2.1.x the RPC expected this
   //          as a string. 2.2 should fix this, and expect a number for numeric values, boolean for true/false values,
   //          string for mix-content values, etc.
 
-  var responseHandler = function(err, result, resHeaders) {
-    //res.setHeader('Content-Type', 'application/json');
-    //
-    //if (err) {
-    //  return commonUtils.reportError(res, err);
-    //}
-    //
-    //console.log('Alias new:', result);
-    //res.end(JSON.stringify(result));
-  };
-
-  const response = {};
-  response['application/json'] = [];
+  //Note3: this is done to control explicit ordering. Theoretically we could probably use some combo of Object.keys()
+  //       and generator functions or Dict to reduce the boilerplate for each function.
+  const aliasname = request.aliasname;
+  const publicvalue = request.publicValue;
+  const accepttransfers = request.acceptTransfers;
+  const expire_timestamp = request.expire_timestamp;
+  const address = request.address;
+  const encryption_privatekey = request.encryption_privatekey;
+  const encryption_publickey = request.encryption_publickey;
+  const witness = request.witness;
 
   try {
-    const result = await syscoinClient.aliasNew(aliasname);
-    console.log("Res:" + JSON.stringify(result));
-    response['application/json'].push(result);
-    return response;
-  }catch(e){}
+    const result = await syscoinClient.aliasNew(aliasname, publicvalue, accepttransfers, expire_timestamp, address, encryption_privatekey, encryption_publickey, witness);
+    console.log('Alias new:', result);
+    return result;
+  }catch(e) {
+    throw e;
+  }
 }
 
 
