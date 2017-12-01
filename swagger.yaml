@@ -3702,7 +3702,7 @@ definitions:
         description: Alias public profile data, 512 characters max.
         type: string
       accepttransfers:
-        description: set to No if this alias should not allow a certificate to be transferred to it. Defaults to Yes.
+        description: set to false if this alias should not allow a certificate to be transferred to it. Defaults to true.
         type: string
       expire_timestamp:
         description: Time in seconds. Future time when to expire alias. It is exponentially more expensive per year, calculation is FEERATE*(2.88^years). FEERATE is the dynamic satoshi per byte fee set in the rate peg alias used for this alias. Defaults to 1 year.
