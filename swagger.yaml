@@ -304,30 +304,6 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /aliasaddscript:
-    x-swagger-router-controller: rpc
-    post:
-      operationId: aliasaddscript
-      description: Add redeemscript to local wallet for signing smart contract based alias transactions.
-      security:
-      - token: []
-      tags:
-      - Aliases
-      parameters:
-      - name: redeemscript
-        in: query
-        required: true
-        type: string
-      responses:
-        "200":
-          description: Success
-          schema:
-            type: object
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-
   /aliasfilter:
     x-swagger-router-controller: rpc
     get:
