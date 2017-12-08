@@ -1,23 +1,5 @@
 var syscoinClient = require('../index').syscoinClient;
 
-/**
- * Add redeemscript to local wallet for signing smart contract based alias transactions.
- *
- * redeemscript String 
- * returns Object
- **/
-exports.aliasaddscript = function(redeemscript) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = "{}";
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
-}
-
 
 /**
  * Returns the total amount received by the given alias in transactions with at least 1 confirmation.
@@ -26,15 +8,14 @@ exports.aliasaddscript = function(redeemscript) {
  * returns Object
  **/
 exports.aliasbalance = function(alias) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = "{}";
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
+
+    try {
+        const result = await syscoinClient.aliasbalance(alias);
+        console.log('Alias balance:', result);
+        return result;
+    } catch (e) {
+        throw e;
     }
-  });
 }
 
 
@@ -46,15 +27,13 @@ exports.aliasbalance = function(alias) {
  * returns Object
  **/
 exports.aliasclearwhitelist = function(owneralias,witness) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = "{}";
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
+    try {
+        const result = await syscoinClient.aliasclearwhitelist(owneralias, witness);
+        console.log('Alias clear whitelist:', result);
+        return result;
+    } catch (e) {
+        throw e;
     }
-  });
 }
 
 
@@ -62,23 +41,24 @@ exports.aliasclearwhitelist = function(owneralias,witness) {
  * scan and filter aliases
  *
  * query String Generic filter query to pass into syscoinquery
- * count String The number of results to return (optional)
- * from String Show results from this GUID [from], empty means first (optional)
+ * count number The number of results to return (optional)
+ * sortfield Which field to sort on, empty means none
+ * sortdirection Which direction to sort sortfield, 1 for ascending and -1 for descending
  * returns List
  **/
-exports.aliasfilter = function(query,count,from) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ {
-  "address" : "aeiou",
-  "_id" : "aeiou"
-} ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
+exports.aliasfilter = function (query, count, sortfield, sortdirection) {
+
+    try {
+        var opts = "{'limit': {'$numberInt': '" + count + "'}}";
+        if (sortfield && sortdirection) {
+            opts += ", {'sort': {'" + sortfield + "': '" + sortdirection + "'}}";
+        }
+        const result = await syscoinClient.syscoinquery("alias", query, opts);
+        console.log('Alias filter:', result);
+        return result;
+    } catch (e) {
+        throw e;
     }
-  });
 }
 
 
@@ -86,30 +66,23 @@ exports.aliasfilter = function(query,count,from) {
  * List all stored values of an alias.
  *
  * query String Generic filter query to pass into syscoinquery
- * count BigDecimal The number of results to return (optional)
- * from String Show results from this GUID [from], empty means first (optional)
+ * count number The number of results to return (optional)
+ * sortfield Which field to sort on, empty means none
+ * sortdirection Which direction to sort sortfield, 1 for ascending and -1 for descending
  * returns List
  **/
-exports.aliashistory = function(query,count,from) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ {
-  "op" : "aeiou",
-  "publicvalue" : "aeiou",
-  "address" : "aeiou",
-  "encryption_privatekey" : "aeiou",
-  "alias" : "aeiou",
-  "_id" : "aeiou",
-  "time" : 0.80082819046101150206595775671303272247314453125,
-  "encryption_publickey" : "aeiou",
-  "acceptcerttransfers" : true
-} ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
+exports.aliashistory = function (query, count, sortfield, sortdirection) {
+    try {
+        var opts = "{'limit': {'$numberInt': '" + count + "'}}";
+        if (sortfield && sortdirection) {
+            opts += ", {'sort': {'" + sortfield + "': '" + sortdirection + "'}}";
+        }
+        const result = await syscoinClient.syscoinquery("aliashistory", query, opts);
+        console.log('Alias history:', result);
+        return result;
+    } catch (e) {
+        throw e;
     }
-  });
 }
 
 
@@ -120,26 +93,13 @@ exports.aliashistory = function(query,count,from) {
  * returns Alias
  **/
 exports.aliasinfo = function(aliasname) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-  "publicvalue" : "aeiou",
-  "address" : "aeiou",
-  "expired" : true,
-  "encryption_privatekey" : "aeiou",
-  "expires_on" : 6.02745618307040320615897144307382404804229736328125,
-  "txid" : "aeiou",
-  "_id" : "aeiou",
-  "time" : 0.80082819046101150206595775671303272247314453125,
-  "encryption_publickey" : "aeiou",
-  "acceptcerttransfers" : true
-};
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
+    try {
+        const result = await syscoinClient.aliasinfo(aliasname);
+        console.log('Alias info:', result);
+        return result;
+    } catch (e) {
+        throw e;
     }
-  });
 }
 
 
@@ -150,14 +110,6 @@ exports.aliasinfo = function(aliasname) {
  * returns List
  **/
 exports.aliasnew = async (request) => {
-  //Note1: we should no longer require 'default args' as was the pattern in 2.1.x as there should now
-  //      be a way to inform the rpc to us the default value by passing ""
-
-  //Note2: type correction util should no longer be needed, RPC should expect the correct types
-  //      ie: nrequired should be a number because it is a numeric value. In 2.1.x the RPC expected this
-  //          as a string. 2.2 should fix this, and expect a number for numeric values, boolean for true/false values,
-  //          string for mix-content values, etc.
-
   //Note3: this is done to control explicit ordering. Theoretically we could probably use some combo of Object.keys()
   //       and generator functions or Dict to reduce the boilerplate for each function.
   const aliasname = request.aliasname;
@@ -185,16 +137,19 @@ exports.aliasnew = async (request) => {
  * request AliasPayRequest 
  * returns List
  **/
-exports.aliaspay = function(request) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ "aeiou" ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
+exports.aliaspay = function (request) {
+    const aliasname = request.alias;
+    const currency = request.currency;
+    const amounts = request.amounts;
+    const minconf = request.minconf;
+    const comment = request.comment;
+    try {
+        const result = await syscoinClient.aliaspay(aliasname, currency, amounts, minconf, comment);
+        console.log('Alias pay:', result);
+        return result;
+    } catch (e) {
+        throw e;
     }
-  });
 }
 
 
@@ -202,27 +157,24 @@ exports.aliaspay = function(request) {
  * List all stored transactions related to an alias.
  *
  * query String Generic filter query to pass into syscoinquery
- * count BigDecimal The number of results to return (optional)
- * from String Show results from this GUID [from], empty means first (optional)
+ * count number The number of results to return (optional)
+ * sortfield Which field to sort on, empty means none
+ * sortdirection Which direction to sort sortfield, 1 for ascending and -1 for descending
  * returns List
  **/
-exports.aliastxhistory = function(query,count,from) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ {
-  "alias" : "aeiou",
-  "guid" : "aeiou",
-  "_id" : "aeiou",
-  "time" : 0.80082819046101150206595775671303272247314453125,
-  "type" : "aeiou",
-  "value" : "aeiou"
-} ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
+exports.aliastxhistory = function (query, count, sortfield, sortdirection) {
+    try {
+        var opts = "{'limit': {'$numberInt': '" + count + "'}}";
+        if (sortfield && sortdirection) {
+            opts += ", {'sort': {'" + sortfield + "': '" + sortdirection + "'}}";
+        }
+        const result = await syscoinClient.syscoinquery("aliastxhistory", query, opts);
+        console.log('Alias tx history:', result);
+        return result;
+    } catch (e) {
+        throw e;
     }
-  });
+}
 }
 
 
@@ -233,15 +185,22 @@ exports.aliastxhistory = function(query,count,from) {
  * returns List
  **/
 exports.aliasupdate = function(request) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ "aeiou" ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
+    const aliasname = request.aliasname;
+    const publicvalue = request.publicValue;
+    const address = request.address;
+    const accepttransfers = request.acceptTransfers;
+    const expire_timestamp = request.expire_timestamp;
+    const encryption_privatekey = request.encryption_privatekey;
+    const encryption_publickey = request.encryption_publickey;
+    const witness = request.witness;
+
+    try {
+        const result = await syscoinClient.aliasUpdate(aliasname, publicvalue, address, accepttransfers, expire_timestamp, encryption_privatekey, encryption_publickey, witness);
+        console.log('Alias update:', result);
+        return result;
+    } catch (e) {
+        throw e;
     }
-  });
 }
 
 
@@ -251,16 +210,17 @@ exports.aliasupdate = function(request) {
  * request AliasUpdateWhitelistRequest 
  * returns List
  **/
-exports.aliasupdatewhitelist = function(request) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ "aeiou" ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
+exports.aliasupdatewhitelist = function (request) {
+    const aliasname = request.owneralias;
+    const entries = request.entries;
+    const witness = request.witness;
+    try {
+        const result = await syscoinClient.aliasupdatewhitelist(aliasname, entries, witness);
+        console.log('Alias update whitelist:', result);
+        return result;
+    } catch (e) {
+        throw e;
     }
-  });
 }
 
 
@@ -272,18 +232,13 @@ exports.aliasupdatewhitelist = function(request) {
  * returns List
  **/
 exports.aliaswhitelist = function(alias,witness) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ {
-  "alias" : "aeiou",
-  "discount_percentage" : 0.80082819046101150206595775671303272247314453125
-} ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
+    try {
+        const result = await syscoinClient.aliaswhitelist(alias, witness);
+        console.log('Alias whitelist:', result);
+        return result;
+    } catch (e) {
+        throw e;
     }
-  });
 }
 
 
@@ -293,15 +248,13 @@ exports.aliaswhitelist = function(alias,witness) {
  * returns Object
  **/
 exports.prunesyscoinservices = function() {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = "{}";
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
+    try {
+        const result = await syscoinClient.prunesyscoinservices();
+        console.log('prunesyscoinservices:', result);
+        return result;
+    } catch (e) {
+        throw e;
     }
-  });
 }
 
 
@@ -314,14 +267,12 @@ exports.prunesyscoinservices = function() {
  * returns List
  **/
 exports.syscoinquery = function(collection,query,options) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ "aeiou" ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
+    try {
+        const result = await syscoinClient.syscoinquery(collection, query, options);
+        console.log('syscoinquery:', result);
+        return result;
+    } catch (e) {
+        throw e;
     }
-  });
 }
 

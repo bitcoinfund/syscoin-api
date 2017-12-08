@@ -324,11 +324,16 @@ paths:
         description: The number of results to return
         required: false
         type: string
-      - name: from
+      - name: sortfield
         in: query
-        description: Show results from this GUID [from], empty means first
+        description: Which field to sort on
         required: false
-        type: string         
+        type: string  
+      - name: sortdirection
+        in: query
+        description: Which direction to sort sortfield, 1 for ascending and -1 for descending
+        required: false
+        type: number             
       responses:
         "200":
           description: Success
@@ -361,11 +366,16 @@ paths:
         description: The number of results to return
         required: false
         type: number
-      - name: from
+      - name: sortfield
         in: query
-        description: Show results from this GUID [from], empty means first
+        description: Which field to sort on
         required: false
-        type: string        
+        type: string  
+      - name: sortdirection
+        in: query
+        description: Which direction to sort sortfield, 1 for ascending and -1 for descending
+        required: false
+        type: number        
       responses:
         "200":
           description: Success
@@ -398,11 +408,16 @@ paths:
         description: The number of results to return
         required: false
         type: number
-      - name: from
+      - name: sortfield
         in: query
-        description: Show results from this GUID [from], empty means first
+        description: Which field to sort on
         required: false
-        type: string        
+        type: string  
+      - name: sortdirection
+        in: query
+        description: Which direction to sort sortfield, 1 for ascending and -1 for descending
+        required: false
+        type: number         
       responses:
         "200":
           description: Success
@@ -805,11 +820,16 @@ paths:
         description: The number of results to return
         required: false
         type: string
-      - name: from
+      - name: sortfield
         in: query
-        description: Show results from this GUID [from], empty means first
+        description: Which field to sort on
         required: false
-        type: string         
+        type: string  
+      - name: sortdirection
+        in: query
+        description: Which direction to sort sortfield, 1 for ascending and -1 for descending
+        required: false
+        type: number         
       responses:
         "200":
           description: Success
@@ -842,11 +862,16 @@ paths:
         description: The number of results to return
         required: false
         type: number
-      - name: from
+      - name: sortfield
         in: query
-        description: Show results from this GUID [from], empty means first
+        description: Which field to sort on
         required: false
-        type: string          
+        type: string  
+      - name: sortdirection
+        in: query
+        description: Which direction to sort sortfield, 1 for ascending and -1 for descending
+        required: false
+        type: number          
       responses:
         "200":
           description: Success
@@ -1179,11 +1204,16 @@ paths:
         description: The number of results to return
         required: false
         type: string
-      - name: from
+      - name: sortfield
         in: query
-        description: Show results from this GUID [from], empty means first
+        description: Which field to sort on
         required: false
         type: string  
+      - name: sortdirection
+        in: query
+        description: which direction to sort sortfield, 1 for ascending and -1 for descending
+        required: false
+        type: number  
       responses:
         "200":
           description: Success
@@ -1216,11 +1246,16 @@ paths:
         description: The number of results to return
         required: false
         type: string
-      - name: from
+      - name: sortfield
         in: query
-        description: Show results from this GUID [from], empty means first
+        description: Which field to sort on
         required: false
-        type: string         
+        type: string  
+      - name: sortdirection
+        in: query
+        description: Which direction to sort sortfield, 1 for ascending and -1 for descending
+        required: false
+        type: number         
       responses:
         "200":
           description: Success
@@ -1253,11 +1288,16 @@ paths:
         description: The number of results to return
         required: false
         type: string
-      - name: from
+      - name: sortfield
         in: query
-        description: Show results from this GUID [from], empty means first
+        description: Which field to sort on
         required: false
-        type: string         
+        type: string  
+      - name: sortdirection
+        in: query
+        description: Which direction to sort sortfield, 1 for ascending and -1 for descending
+        required: false
+        type: number          
       responses:
         "200":
           description: Success
@@ -2133,11 +2173,16 @@ paths:
         description: The number of results to return
         required: false
         type: string
-      - name: from
+      - name: sortfield
         in: query
-        description: Show results from this GUID [from], empty means first
+        description: Which field to sort on
         required: false
-        type: string        
+        type: string  
+      - name: sortdirection
+        in: query
+        description: Which direction to sort sortfield, 1 for ascending and -1 for descending
+        required: false
+        type: number         
       responses:
         "200":
           description: Success
@@ -2170,11 +2215,16 @@ paths:
         description: The number of results to return
         required: false
         type: string
-      - name: from
+      - name: sortfield
         in: query
-        description: Show results from this GUID [from], empty means first
+        description: Which field to sort on
         required: false
-        type: string         
+        type: string  
+      - name: sortdirection
+        in: query
+        description: Which direction to sort sortfield, 1 for ascending and -1 for descending
+        required: false
+        type: number        
       responses:
         "200":
           description: Success
