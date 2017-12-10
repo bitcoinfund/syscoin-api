@@ -1,13 +1,9 @@
 var jwt    = require('jsonwebtoken');
 var Hashes   = require('jshashes');
-const MongoClient = require('mongodb').MongoClient;
-const ObjectID = require('mongodb').ObjectID;
 
 var config = require('../config');
 var rpcuser = require('../index').rpcuser;
 var rpcpass = require('../index').rpcpass;
-var mongoUtils = require('../utils/mongoUtils');
-
 
 /**
  * Returns a session token for use with subsquent protected calls.
@@ -19,7 +15,7 @@ exports.login = async (auth) => {
   const validAuth = new Hashes.SHA1().hex(rpcuser + rpcpass);
   console.log("Valid pass:" + validAuth + " vs " + auth);
 
-  if (auth != validAuth) {
+  if (auth !== validAuth) {
     return { success: false, message: 'Authentication failed. Wrong password.' };
   } else {
     // if user is found and password is right, create a token

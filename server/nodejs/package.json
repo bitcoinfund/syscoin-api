@@ -24,7 +24,6 @@
     "jshashes": "^1.0.7",
     "jsonwebtoken": "^7.4.3",
     "mocha": "^3.5.3",
-    "mongodb": "^2.2.33",
     "q": "^1.5.1",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
