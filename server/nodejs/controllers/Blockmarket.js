@@ -17,16 +17,3 @@ module.exports.login = function login(req, res, next) {
     utils.writeJson(res, e, 500);
   });
 };
-
-module.exports.storedata = function storedata(req, res, next) {
-  var request = req.swagger.params['request'].value;
-  Blockmarket.storedata(request).then(result => {
-    if(result.success != undefined) {
-      utils.writeJson(res, result, 500);
-    }else{
-      utils.writeJson(res, result);
-    }
-  }).catch(e => {
-    utils.writeJson(res, e, 500);
-  });
-};
