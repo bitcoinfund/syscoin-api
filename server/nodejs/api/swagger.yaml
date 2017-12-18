@@ -285,32 +285,6 @@ paths:
       - token: []
       x-swagger-router-controller: "General"
     x-swagger-router-controller: "rpc"
-  /aliasaddscript:
-    post:
-      tags:
-      - "Aliases"
-      description: "Add redeemscript to local wallet for signing smart contract based\
-        \ alias transactions."
-      operationId: "aliasaddscript"
-      parameters:
-      - name: "redeemscript"
-        in: "query"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "Success"
-          schema:
-            type: "object"
-            properties: {}
-        default:
-          description: "Error"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-      security:
-      - token: []
-      x-swagger-router-controller: "Aliases"
-    x-swagger-router-controller: "rpc"
   /aliasfilter:
     get:
       tags:
@@ -328,11 +302,17 @@ paths:
         description: "The number of results to return"
         required: false
         type: "string"
-      - name: "from"
+      - name: "sortfield"
         in: "query"
-        description: "Show results from this GUID [from], empty means first"
+        description: "Which field to sort on"
         required: false
         type: "string"
+      - name: "sortdirection"
+        in: "query"
+        description: "Which direction to sort sortfield, 1 for ascending and -1 for\
+          \ descending"
+        required: false
+        type: "number"
       responses:
         200:
           description: "Success"
@@ -365,11 +345,17 @@ paths:
         description: "The number of results to return"
         required: false
         type: "number"
-      - name: "from"
+      - name: "sortfield"
         in: "query"
-        description: "Show results from this GUID [from], empty means first"
+        description: "Which field to sort on"
         required: false
         type: "string"
+      - name: "sortdirection"
+        in: "query"
+        description: "Which direction to sort sortfield, 1 for ascending and -1 for\
+          \ descending"
+        required: false
+        type: "number"
       responses:
         200:
           description: "Success"
@@ -402,11 +388,17 @@ paths:
         description: "The number of results to return"
         required: false
         type: "number"
-      - name: "from"
+      - name: "sortfield"
         in: "query"
-        description: "Show results from this GUID [from], empty means first"
+        description: "Which field to sort on"
         required: false
         type: "string"
+      - name: "sortdirection"
+        in: "query"
+        description: "Which direction to sort sortfield, 1 for ascending and -1 for\
+          \ descending"
+        required: false
+        type: "number"
       responses:
         200:
           description: "Success"
@@ -644,6 +636,32 @@ paths:
       - token: []
       x-swagger-router-controller: "Aliases"
     x-swagger-router-controller: "rpc"
+  /signrawtransaction:
+    post:
+      tags:
+      - "General"
+      description: "Sign inputs for raw transaction (serialized, hex-encoded)."
+      operationId: "signrawtransaction"
+      parameters:
+      - in: "body"
+        name: "request"
+        required: true
+        schema:
+          $ref: "#/definitions/SignRawTransactionRequest"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "object"
+            properties: {}
+        default:
+          description: "Error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+      - token: []
+      x-swagger-router-controller: "General"
+    x-swagger-router-controller: "rpc"
   /syscoinsendrawtransaction:
     post:
       tags:
@@ -653,7 +671,7 @@ paths:
       operationId: "syscoinsendrawtransaction"
       parameters:
       - in: "body"
-        name: "hexstring"
+        name: "request"
         required: true
         schema:
           $ref: "#/definitions/SendRawTransactionRequest"
@@ -800,11 +818,17 @@ paths:
         description: "The number of results to return"
         required: false
         type: "string"
-      - name: "from"
+      - name: "sortfield"
         in: "query"
-        description: "Show results from this GUID [from], empty means first"
+        description: "Which field to sort on"
         required: false
         type: "string"
+      - name: "sortdirection"
+        in: "query"
+        description: "Which direction to sort sortfield, 1 for ascending and -1 for\
+          \ descending"
+        required: false
+        type: "number"
       responses:
         200:
           description: "Success"
@@ -837,11 +861,17 @@ paths:
         description: "The number of results to return"
         required: false
         type: "number"
-      - name: "from"
+      - name: "sortfield"
         in: "query"
-        description: "Show results from this GUID [from], empty means first"
+        description: "Which field to sort on"
         required: false
         type: "string"
+      - name: "sortdirection"
+        in: "query"
+        description: "Which direction to sort sortfield, 1 for ascending and -1 for\
+          \ descending"
+        required: false
+        type: "number"
       responses:
         200:
           description: "Success"
@@ -1189,11 +1219,17 @@ paths:
         description: "The number of results to return"
         required: false
         type: "string"
-      - name: "from"
+      - name: "sortfield"
         in: "query"
-        description: "Show results from this GUID [from], empty means first"
+        description: "Which field to sort on"
         required: false
         type: "string"
+      - name: "sortdirection"
+        in: "query"
+        description: "which direction to sort sortfield, 1 for ascending and -1 for\
+          \ descending"
+        required: false
+        type: "number"
       responses:
         200:
           description: "Success"
@@ -1226,11 +1262,17 @@ paths:
         description: "The number of results to return"
         required: false
         type: "string"
-      - name: "from"
+      - name: "sortfield"
         in: "query"
-        description: "Show results from this GUID [from], empty means first"
+        description: "Which field to sort on"
         required: false
         type: "string"
+      - name: "sortdirection"
+        in: "query"
+        description: "Which direction to sort sortfield, 1 for ascending and -1 for\
+          \ descending"
+        required: false
+        type: "number"
       responses:
         200:
           description: "Success"
@@ -1263,11 +1305,17 @@ paths:
         description: "The number of results to return"
         required: false
         type: "string"
-      - name: "from"
+      - name: "sortfield"
         in: "query"
-        description: "Show results from this GUID [from], empty means first"
+        description: "Which field to sort on"
         required: false
         type: "string"
+      - name: "sortdirection"
+        in: "query"
+        description: "Which direction to sort sortfield, 1 for ascending and -1 for\
+          \ descending"
+        required: false
+        type: "number"
       responses:
         200:
           description: "Success"
@@ -2174,11 +2222,17 @@ paths:
         description: "The number of results to return"
         required: false
         type: "string"
-      - name: "from"
+      - name: "sortfield"
         in: "query"
-        description: "Show results from this GUID [from], empty means first"
+        description: "Which field to sort on"
         required: false
         type: "string"
+      - name: "sortdirection"
+        in: "query"
+        description: "Which direction to sort sortfield, 1 for ascending and -1 for\
+          \ descending"
+        required: false
+        type: "number"
       responses:
         200:
           description: "Success"
@@ -2211,11 +2265,17 @@ paths:
         description: "The number of results to return"
         required: false
         type: "string"
-      - name: "from"
+      - name: "sortfield"
         in: "query"
-        description: "Show results from this GUID [from], empty means first"
+        description: "Which field to sort on"
         required: false
         type: "string"
+      - name: "sortdirection"
+        in: "query"
+        description: "Which direction to sort sortfield, 1 for ascending and -1 for\
+          \ descending"
+        required: false
+        type: "number"
       responses:
         200:
           description: "Success"
@@ -4148,11 +4208,11 @@ definitions:
         type: "string"
         description: "Alias public profile data, 512 characters max."
       accepttransfers:
-        type: "string"
-        description: "set to No if this alias should not allow a certificate to be\
-          \ transferred to it. Defaults to Yes."
+        type: "boolean"
+        description: "set to false if this alias should not allow a certificate to\
+          \ be transferred to it. Defaults to true."
       expire_timestamp:
-        type: "string"
+        type: "number"
         description: "Time in seconds. Future time when to expire alias. It is exponentially\
           \ more expensive per year, calculation is FEERATE*(2.88^years). FEERATE\
           \ is the dynamic satoshi per byte fee set in the rate peg alias used for\
@@ -4209,11 +4269,11 @@ definitions:
         type: "string"
         description: "Address of alias."
       accepttransfers:
-        type: "string"
+        type: "boolean"
         description: "set to false if this alias should not allow a certificate to\
           \ be transferred to it. Defaults to true."
       expire_timestamp:
-        type: "string"
+        type: "number"
         description: "Time in seconds. Future time when to expire alias. It is exponentially\
           \ more expensive per year, calculation is 2.88^years. FEERATE is the dynamic\
           \ satoshi per byte fee set in the rate peg alias used for this alias. Defaults\
@@ -4269,7 +4329,7 @@ definitions:
         type: "string"
         description: "Public certificate data, 512 characters max."
       accessflags:
-        type: "string"
+        type: "number"
         description: "Set new access flags for new owner for this certificate, 0 for\
           \ read-only, 1 for edit, 2 for edit and transfer access."
       witness:
@@ -4296,6 +4356,26 @@ definitions:
         type: "string"
         description: "Witness alias name that will sign for web-of-trust notarization\
           \ of this transaction."
+  SignRawTransactionRequest:
+    required:
+    - "hexstring"
+    properties:
+      hexstring:
+        type: "string"
+      prevtxs:
+        type: "array"
+        items:
+          $ref: "#/definitions/PrevTXEntry"
+  PrevTXEntry:
+    properties:
+      txid:
+        type: "string"
+      vout:
+        type: "number"
+      scriptPubKey:
+        type: "string"
+      redeemScript:
+        type: "string"
   SendRawTransactionRequest:
     required:
     - "hexstring"
@@ -4358,13 +4438,13 @@ definitions:
         type: "string"
         description: "Escrow GUID to place bid on."
       bid_in_payment_option:
-        type: "string"
+        type: "number"
         description: "Amount to bid on offer through escrow. Bid is in payment option\
           \ currency. Example, If offer is paid in SYS and you have deposited 10 SYS\
           \ in escrow and would like to increase your total bid to 14 SYS enter 14\
           \ here. It is per unit of purchase."
       bid_in_offer_currency:
-        type: "string"
+        type: "number"
         description: "Converted value of bid_in_payment_option from paymentOption\
           \ currency to offer currency. For example, offer is priced in USD and purchased\
           \ in BTC, this field will be the BTC/USD value. It is per unit of purchase."
@@ -4398,37 +4478,37 @@ definitions:
         type: "string"
         description: "GUID of offer that this escrow is managing."
       quantity:
-        type: "string"
+        type: "number"
         description: "Quantity of items to buy of offer."
       buynow:
-        type: "string"
+        type: "boolean"
         description: "Specify whether the escrow involves purchasing offer for the\
           \ full offer price if set to true, or through a bidding auction if set to\
           \ false. If buynow is false, an initial deposit may be used to secure a\
           \ bid if required by the seller."
       total_in_payment_option:
-        type: "string"
+        type: "number"
         description: "Total amount of the offer price. Amount is in paymentOption\
           \ currency. It is per unit of purchase."
       shipping:
-        type: "string"
+        type: "number"
         description: "Amount to add to shipping for merchant. Amount is in paymentOption\
           \ currency. Example, If merchant requests 0.1 BTC for shipping and escrow\
           \ is paid in BTC, enter 0.1 here. Default is 0. Buyer can also add shipping\
           \ using escrowaddshipping upon merchant request."
       networkfee:
-        type: "string"
+        type: "number"
         description: "Network fee in satoshi per byte for the transaction. Generally\
           \ the escrow transaction is about 400 bytes. Default is 25 for SYS or ZEC\
           \ and 250 for BTC payments."
       arbiterfee:
-        type: "string"
+        type: "number"
         description: "Arbiter fee in fractional amount of the amount_in_payment_option\
           \ value. For example 0.75% is 0.0075 and represents 0.0075*amount_in_payment_option\
           \ satoshis paid to arbiter in the event arbiter is used to resolve a dispute.\
           \ Default and minimum is 0.005."
       witnessfee:
-        type: "string"
+        type: "number"
         description: "Witness fee in fractional amount of the amount_in_payment_option\
           \ value. For example 0.3% is 0.003 and represents 0.003*amount_in_payment_option\
           \ satoshis paid to witness in the event witness signs off on an escrow through\
@@ -4442,12 +4522,12 @@ definitions:
         description: "If extTx is defined, specify a valid payment option used to\
           \ make payment. Default is SYS."
       bid_in_payment_option:
-        type: "string"
+        type: "number"
         description: "Initial bid amount you are willing to pay escrow for this offer.\
           \ Amount is in paymentOption currency. It is per unit of purchase. If buynow\
           \ is set to true, this value is disregarded."
       bid_in_offer_currency:
-        type: "string"
+        type: "number"
         description: "Converted value of bid_in_payment_option from paymentOption\
           \ currency to offer currency. For example, offer is priced in USD and purchased\
           \ in BTC, this field will be the BTC/USD value. If buynow is set to true,\
@@ -4550,7 +4630,7 @@ definitions:
         type: "string"
         description: "offer guid that you are linking to"
       commission:
-        type: "string"
+        type: "number"
         description: "percentage of profit desired over original offer price, > 0,\
           \ ie 5 for 5%"
       description:
@@ -4576,10 +4656,10 @@ definitions:
         type: "string"
         description: "title, 256 characters max."
       quantity:
-        type: "string"
+        type: "number"
         description: "quantity, > 0 or -1 for infinite"
       price:
-        type: "string"
+        type: "number"
         description: "price in <currency>, > 0"
       description:
         type: "string"
@@ -4596,11 +4676,11 @@ definitions:
           \ only, or a |-delimited string to accept multiple currencies (e.g. 'BTC|SYS'\
           \ to accept BTC or SYS). Leave empty for default. Defaults to 'SYS'."
       private:
-        type: "string"
+        type: "boolean"
         description: "set to true if this offer should be private not be searchable.\
           \ Defaults to false."
       units:
-        type: "string"
+        type: "number"
         description: "Units that 1 qty represents. For example if selling 1 BTC."
       offertype:
         type: "string"
@@ -4611,24 +4691,24 @@ definitions:
           \ to create an offer that is sold through an auction but has Buy It Now\
           \ enabled as well).Leave empty for default. Defaults to 'BUYNOW'."
       auction_expires:
-        type: "string"
+        type: "number"
         description: "If offerType is AUCTION, Datetime of expiration of an auction.\
           \ Once merchant creates an offer as an auction, the expiry must be non-zero.\
           \ The auction parameters will not be updateable until an auction expires."
       auction_reserve:
-        type: "string"
+        type: "number"
         description: "If offerType is AUCTION, Reserve price of an offer publicly.\
           \ Bids must be of higher price than the reserve price. Any bid below the\
           \ reserve price will be rejected by consensus checks in escrow. Default\
           \ is 0."
       auction_require_witness:
-        type: "string"
+        type: "boolean"
         description: "If offerType is AUCTION, Require a witness signature for bids\
           \ of an offer, or release/refund of an escrow funds in an auction for the\
           \ offer. Set to true if you wish to require witness signature. Default is\
           \ false."
       auction_deposit:
-        type: "string"
+        type: "number"
         description: "If offerType is AUCTION. If you require a deposit for each bidder\
           \ to ensure stake to bidders set this to a percentage of the offer price\
           \ required to place deposit when doing an initial bid. For Example, 1% of\
@@ -4655,10 +4735,10 @@ definitions:
         type: "string"
         description: "title, 256 characters max."
       quantity:
-        type: "string"
+        type: "number"
         description: "quantity, > 0 or -1 for infinite"
       price:
-        type: "string"
+        type: "number"
         description: "price in <currency>, > 0"
       description:
         type: "string"
@@ -4667,14 +4747,14 @@ definitions:
         type: "string"
         description: "The currency code that you want your offer to be in ie USD."
       private:
-        type: "string"
+        type: "boolean"
         description: "set to true if this offer should be private not be searchable.\
           \ Defaults to false."
       certguid:
         type: "string"
         description: "Set this to the guid of a certificate you wish to sell"
       commission:
-        type: "string"
+        type: "number"
         description: "For resold offers."
       paymentoptions:
         type: "string"
@@ -4690,24 +4770,24 @@ definitions:
           \ to create an offer that is sold through an auction but has Buy It Now\
           \ enabled as well).Leave empty for default. Defaults to 'BUYNOW'."
       auction_expires:
-        type: "string"
+        type: "number"
         description: "If offerType is AUCTION, Datetime of expiration of an auction.\
           \ Once merchant creates an offer as an auction, the expiry must be non-zero.\
           \ The auction parameters will not be updateable until an auction expires."
       auction_reserve:
-        type: "string"
+        type: "number"
         description: "If offerType is AUCTION, Reserve price of an offer publicly.\
           \ Bids must be of higher price than the reserve price. Any bid below the\
           \ reserve price will be rejected by consensus checks in escrow. Default\
           \ is 0."
       auction_require_witness:
-        type: "string"
+        type: "boolean"
         description: "If offerType is AUCTION, Require a witness signature for bids\
           \ of an offer, or release/refund of an escrow funds in an auction for the\
           \ offer. Set to true if you wish to require witness signature. Default is\
           \ false."
       auction_deposit:
-        type: "string"
+        type: "number"
         description: "If offerType is AUCTION. If you require a deposit for each bidder\
           \ to ensure stake to bidders set this to a percentage of the offer price\
           \ required to place deposit when doing an initial bid. For Example, 1% of\
@@ -4862,7 +4942,7 @@ definitions:
       feedback:
         type: "string"
       rating:
-        type: "string"
+        type: "number"
       userto:
         type: "string"
       witness:
