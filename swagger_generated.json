@@ -23,6 +23,9 @@
   }, {
     "name" : "Certificates",
     "description" : "Operations related to digital certificates."
+  }, {
+    "name" : "Asset",
+    "description" : "Operation related to assets"
   } ],
   "schemes" : [ "http", "https" ],
   "consumes" : [ "application/json" ],
@@ -357,61 +360,29 @@
       },
       "x-swagger-router-controller" : "rpc"
     },
-    "/aliasaffiliates" : {
+    "/assetinfo" : {
       "get" : {
-        "tags" : [ "Aliases" ],
-        "description" : "list affiliations with merchant offers.",
-        "operationId" : "aliasaffiliates",
-        "parameters" : [ ],
-        "responses" : {
-          "200" : {
-            "description" : "Success",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "type" : "object",
-                "properties" : { }
-              }
-            }
-          },
-          "default" : {
-            "description" : "Error",
-            "schema" : {
-              "$ref" : "#/definitions/ErrorResponse"
-            }
-          }
-        },
-        "security" : [ {
-          "token" : [ ]
-        } ]
-      },
-      "x-swagger-router-controller" : "rpc"
-    },
-    "/aliasauthenticate" : {
-      "get" : {
-        "tags" : [ "Aliases" ],
-        "description" : "Authenticates an alias with a provided password and returns the private key if successful. Warning: Calling this function over a public network can lead to someone reading your password/private key in plain text.",
-        "operationId" : "aliasauthenticate",
+        "tags" : [ "Asset" ],
+        "description" : "Show stored values of a single asset and its. Set getinputs to true if you want to get the allocation inputs, if applicable.",
+        "operationId" : "assetinfo",
         "parameters" : [ {
-          "name" : "alias",
+          "name" : "asset",
           "in" : "query",
+          "description" : "Asset Id.",
           "required" : true,
           "type" : "string"
         }, {
-          "name" : "password",
+          "name" : "getinputs",
           "in" : "query",
-          "required" : true,
+          "description" : "Set getinputs to true if you want to get the allocation inputs, if applicable.",
+          "required" : false,
           "type" : "string"
         } ],
         "responses" : {
           "200" : {
             "description" : "Success",
             "schema" : {
-              "type" : "array",
-              "items" : {
-                "type" : "object",
-                "properties" : { }
-              }
+              "type" : "string"
             }
           },
           "default" : {
@@ -420,10 +391,7 @@
               "$ref" : "#/definitions/ErrorResponse"
             }
           }
-        },
-        "security" : [ {
-          "token" : [ ]
-        } ]
+        }
       },
       "x-swagger-router-controller" : "rpc"
     },

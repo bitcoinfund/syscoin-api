@@ -55,3 +55,7 @@ module.exports.aliaspay = function aliaspay (req, res, next) {
 module.exports.aliasupdate = function aliasupdate (req, res, next) {
   Aliases.aliasupdate(req.swagger.params, res, next);
 };
+
+module.exports.aliaswhitelist = function aliaswhitelist (req, res, next) {
+  Aliases.aliaswhitelist(req.swagger.params, res, next);
+};

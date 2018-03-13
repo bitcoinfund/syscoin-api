@@ -29,7 +29,10 @@ tags:
   description: Operations related to escrow.
 - name: Certificates
   description: Operations related to digital certificates.
+- name: Asset
+  description: Operation related to assets
 paths:
+
   /login:
     x-swagger-router-controller: blockmarket
     get:
@@ -280,56 +283,33 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /aliasaffiliates:
-    x-swagger-router-controller: rpc
-    get:
-      operationId: aliasaffiliates
-      description: list affiliations with merchant offers.
-      security:
-      - token: []
-      tags:
-      - Aliases
-      responses:
-        "200":
-          description: Success
-          schema:
-            type: array
-            items:
-              type: object #TODO: define type
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-
-  /aliasauthenticate:
-    x-swagger-router-controller: rpc
-    get:
-      operationId: aliasauthenticate
-      description: "Authenticates an alias with a provided password and returns the private key if successful. Warning: Calling this function over a public network can lead to someone reading your password/private key in plain text."
-      security:
-      - token: []
-      tags:
-      - Aliases
-      parameters:
-      - name: alias
-        in: query
-        required: true
-        type: string
-      - name: password
-        in: query
-        required: true
-        type: string
-      responses:
-        "200":
-          description: Success
-          schema:
-            type: array
-            items:
-              type: object #TODO: define type
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
+  /assetinfo:
+      x-swagger-router-controller: rpc
+      get:
+        operationId: assetinfo
+        description: Show stored values of a single asset and its. Set getinputs to true if you want to get the allocation inputs, if applicable.
+        tags:
+        - Asset
+        parameters:
+        - name: asset
+          description: Asset Id.
+          in: query
+          required: true
+          type: string
+        - name: getinputs
+          description: Set getinputs to true if you want to get the allocation inputs, if applicable.
+          in: query
+          required: false
+          type: string
+        responses:
+          "200":
+            description: Success
+            schema:
+              type: string
+          default:
+            description: Error
+            schema:
+              $ref: "#/definitions/ErrorResponse"
 
   /aliasbalance:
     x-swagger-router-controller: rpc
