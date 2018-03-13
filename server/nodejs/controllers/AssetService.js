@@ -19,5 +19,5 @@ exports.assetinfo  = function(args, res, next) {
   };
 
   var arr = varUtils.getArgsArr(argList, args, "GET", cb);
-  syscoinClient.assetinfo.apply(syscoinClient, arr);
+  syscoinClient.assetInfo.apply(syscoinClient, arr);
 }
